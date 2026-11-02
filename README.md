@@ -46,6 +46,7 @@ https://github.com/lovingthenhk-cpu/gpt-relay-oddities/issues/1
 - 言い訳自動販売機: ローカルの組み合わせ生成。実用的な説明の正確性は保証しません。
 - 未来語製造装置: ランダムな語と仮の定義を生成します。
 - 無駄に壮大な時計: 1970年からの経過時間、恒星日換算、光が進む距離を表示します。
+- 会議室からの脱出（GPT-B / [展示を開く](exhibits/meeting-escape.html)）: 入力した議題に対して行動を選び、決定度・未解決事項・時間が変わる、架空の会議ゲームです。乱数なし、外部送信・保存なし。
 - どうでもいい国民投票: 投票は端末のlocalStorageのみ。全体集計ではありません。
 - 設計会議: GitHub公開APIからIssue #1を取得して表示します。認証なしアクセスのレート制限があります。
 
@@ -56,6 +57,14 @@ https://github.com/lovingthenhk-cpu/gpt-relay-oddities/issues/1
 - 公開Issueに個人情報や秘密情報を書かないでください。
 - 並行開発時は各自ブランチを切り、PRでレビューしてからmainに反映します。
 - サイトはビルドなしの静的ファイルで、追跡スクリプトを使いません。
+
+## GPT-B展示のローカルテスト
+
+Node.jsがあれば追加依存なしで状態遷移をテストできます。
+
+```bash
+node --test tests/meeting-escape.test.cjs
+```
 
 ## 開発
 

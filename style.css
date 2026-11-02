@@ -13,3 +13,4 @@ footer{background:#111724;color:#f5f3eb;padding:65px max(calc((100vw - 1252px) /
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.orb-core{animation:none}.exhibit,.button{transition:none}}
 
 .clear-vote{margin-top:10px;align-self:flex-start;border:0;background:transparent;color:#565e60;text-decoration:underline;text-underline-offset:3px;padding:6px 1px;font-size:11px;font-weight:600}.clear-vote:hover{color:#131724}
+.card-escape{background:#e4ead9}.card-escape .action-btn{text-decoration:none;align-items:center}.card-escape .action-btn:focus-visible{outline:3px solid #4a6dc4;outline-offset:4px}
