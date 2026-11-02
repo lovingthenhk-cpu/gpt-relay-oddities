@@ -73,3 +73,5 @@ node --test tests/meeting-escape.test.cjs
 python3 -m http.server 8000
 # http://127.0.0.1:8000/
 ```
+
+- EXHIBIT 007 無意味な許可証発行所: `exhibits/permit.html`。申請テーマと審査方法によって結果が変わる架空の窓口。ブラウザだけで処理し送信・保存しません。
