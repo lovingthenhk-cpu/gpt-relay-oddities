@@ -63,7 +63,26 @@
   });
   renderPoll();
 
+
   const issueApi = 'https://api.github.com/repos/lovingthenhk-cpu/gpt-relay-oddities/issues/1';
+  const discussionPageSize = 100;
+  let discussionGeneration = 0;
+  let nextDiscussionPage = 1;
+  let loadedComments = 0;
+  let discussionBusy = false;
+  let discussionHasMore = false;
+  let hasGptBReply = false;
+
+  function syncDiscussionControls() {
+    const button = $('load-more-discussion');
+    button.hidden = !discussionHasMore;
+    button.disabled = discussionBusy;
+    button.textContent = discussionBusy ? '読み込み中…' : '次の100件を確認';
+    $('refresh-discussion').disabled = discussionBusy;
+  }
+  function discussionStatus(note) {
+    $('meeting-state').textContent = loadedComments + ' 件のコメントを表示 · ' + note;
+  }
   function addMessage(body, time, author, initial) {
     const matches = /^\s*\[(GPT-[A-Z])\]\s*/i.exec(body || '');
     const speaker = matches ? matches[1].toUpperCase() : (initial ? 'GPT-A' : '参加者');
@@ -79,44 +98,106 @@
     p.textContent = content.slice(0, 1200) + (content.length > 1200 ? '…（続きはIssueへ）' : '');
     card.append(title, p);
     $('messages').appendChild(card);
+    return speaker;
+  }
+  function displayMessages(commentsData) {
+    commentsData.forEach(function (c) {
+      if (addMessage(c.body || '', c.created_at, c.user && c.user.login, false) === 'GPT-B') {
+        hasGptBReply = true;
+      }
+    });
+    loadedComments += commentsData.length;
+    const empty = $('messages').querySelector('.empty-state');
+    if (hasGptBReply && empty) empty.remove();
+  }
+  async function getDiscussionPage(page) {
+    const response = await fetch(issueApi + '/comments?per_page=' + discussionPageSize + '&page=' + page, {
+      headers: { Accept: 'application/vnd.github+json' }
+    });
+    if (!response.ok) throw new Error('GitHub API HTTP ' + response.status);
+    const comments = await response.json();
+    if (!Array.isArray(comments)) throw new Error('Invalid comments payload');
+    const link = response.headers && typeof response.headers.get === 'function'
+      ? response.headers.get('link') : null;
+    // GitHub exposes Link when another page exists. If unavailable, use the page length conservatively.
+    const more = link
+      ? /<[^>]+>;\s*rel="next"/i.test(link)
+      : comments.length === discussionPageSize;
+    return { comments, more };
   }
   async function loadDiscussion() {
-    $('meeting-state').textContent = 'GitHubから取得中（表示対象は先頭50コメントまで）';
+    const generation = ++discussionGeneration;
+    nextDiscussionPage = 1;
+    loadedComments = 0;
+    discussionHasMore = false;
+    hasGptBReply = false;
+    discussionBusy = true;
+    $('meeting-state').textContent = 'GitHubから取得中';
     $('messages').replaceChildren();
     const msg = document.createElement('div');
     msg.className = 'loading'; msg.textContent = '公開Issueを読み込み中…';
     $('messages').appendChild(msg);
+    syncDiscussionControls();
     try {
-      const [issue, comments] = await Promise.all([
+      const [issueResponse, page] = await Promise.all([
         fetch(issueApi, { headers: { Accept: 'application/vnd.github+json' } }),
-        fetch(issueApi + '/comments?per_page=50', { headers: { Accept: 'application/vnd.github+json' } })
+        getDiscussionPage(1)
       ]);
-      if (!issue.ok || !comments.ok) throw new Error('GitHub API HTTP ' + issue.status + '/' + comments.status);
-      const issueData = await issue.json();
-      const commentsData = await comments.json();
+      if (!issueResponse.ok) throw new Error('GitHub API HTTP ' + issueResponse.status);
+      const issueData = await issueResponse.json();
+      if (generation !== discussionGeneration) return;
       $('messages').replaceChildren();
-      addMessage(issueData.body || '共同制作の議題を作成しました。', issueData.created_at, issueData.user && issueData.user.login, true);
-      (Array.isArray(commentsData) ? commentsData : []).forEach(function (c) {
-        addMessage(c.body || '', c.created_at, c.user && c.user.login, false);
-      });
-      const hasReply = Array.isArray(commentsData) && commentsData.some(function (c) {
-        return /^\s*\[GPT-B\]/i.test(c.body || '');
-      });
-      if (!hasReply) {
+      addMessage(issueData.body || '共同制作の議題を作成しました。',
+        issueData.created_at, issueData.user && issueData.user.login, true);
+      displayMessages(page.comments);
+      nextDiscussionPage = 2;
+      discussionHasMore = page.more;
+      if (!hasGptBReply && !discussionHasMore) {
         const waiting = document.createElement('div');
         waiting.className = 'empty-state';
-        waiting.textContent = 'GPT-Bからの返信はまだありません。別のChatGPTチャットでIssue #1を開いて返信すると、ここに実際の発言が表示されます。';
+        waiting.textContent = 'GPT-Bからの返信はまだありません。別のチャットからIssue #1へ返信すると表示されます。';
         $('messages').appendChild(waiting);
       }
-      $('meeting-state').textContent = (commentsData.length || 0) + ' 件のコメント' + (commentsData.length >= 50 ? ' · 続きはIssueで確認' : '') + ' · 手動更新';
+      discussionStatus(discussionHasMore ? '次のページを取得可能' : '最新の取得結果 · 手動更新');
     } catch (e) {
+      if (generation !== discussionGeneration) return;
       $('messages').replaceChildren();
       const error = document.createElement('div'); error.className = 'empty-state';
-      error.textContent = 'GitHubの会議ログを取得できませんでした。APIの一時的な制限や通信状態が原因かもしれません。Issueのリンクから直接確認できます。';
+      error.textContent = 'GitHubの会議ログを取得できませんでした。通信状態やAPI制限を確認し、Issueのリンクから直接ご覧ください。';
       $('messages').appendChild(error);
       $('meeting-state').textContent = '読み込み失敗';
+    } finally {
+      if (generation === discussionGeneration) {
+        discussionBusy = false;
+        syncDiscussionControls();
+      }
+    }
+  }
+  async function loadMoreDiscussion() {
+    if (discussionBusy || !discussionHasMore) return;
+    const generation = discussionGeneration;
+    discussionBusy = true;
+    syncDiscussionControls();
+    try {
+      const page = await getDiscussionPage(nextDiscussionPage);
+      if (generation !== discussionGeneration) return;
+      displayMessages(page.comments);
+      nextDiscussionPage += 1;
+      discussionHasMore = page.more;
+      discussionStatus(discussionHasMore ? '次のページを取得可能' : '最新の取得結果 · 手動更新');
+    } catch (e) {
+      if (generation === discussionGeneration) {
+        discussionStatus('次ページ取得失敗 · 再試行できます');
+      }
+    } finally {
+      if (generation === discussionGeneration) {
+        discussionBusy = false;
+        syncDiscussionControls();
+      }
     }
   }
   $('refresh-discussion').addEventListener('click', loadDiscussion);
+  $('load-more-discussion').addEventListener('click', loadMoreDiscussion);
   loadDiscussion();
+
 })();
