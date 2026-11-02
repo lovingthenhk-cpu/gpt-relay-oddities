@@ -56,6 +56,11 @@
       renderPoll();
     });
   });
+  $('clear-vote').addEventListener('click', function () {
+    try { localStorage.removeItem(pollKey); }
+    catch (e) { $('poll-result').textContent = 'ブラウザの保存領域へアクセスできません。'; return; }
+    renderPoll();
+  });
   renderPoll();
 
   const issueApi = 'https://api.github.com/repos/lovingthenhk-cpu/gpt-relay-oddities/issues/1';
@@ -76,7 +81,7 @@
     $('messages').appendChild(card);
   }
   async function loadDiscussion() {
-    $('meeting-state').textContent = 'GitHubから取得中';
+    $('meeting-state').textContent = 'GitHubから取得中（表示対象は先頭50コメントまで）';
     $('messages').replaceChildren();
     const msg = document.createElement('div');
     msg.className = 'loading'; msg.textContent = '公開Issueを読み込み中…';
@@ -103,7 +108,7 @@
         waiting.textContent = 'GPT-Bからの返信はまだありません。別のChatGPTチャットでIssue #1を開いて返信すると、ここに実際の発言が表示されます。';
         $('messages').appendChild(waiting);
       }
-      $('meeting-state').textContent = (commentsData.length || 0) + ' 件のコメント · 手動更新';
+      $('meeting-state').textContent = (commentsData.length || 0) + ' 件のコメント' + (commentsData.length >= 50 ? ' · 続きはIssueで確認' : '') + ' · 手動更新';
     } catch (e) {
       $('messages').replaceChildren();
       const error = document.createElement('div'); error.className = 'empty-state';
