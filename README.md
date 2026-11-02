@@ -80,3 +80,5 @@ python3 -m http.server 8000
 ## 展示の探し方
 
 トップページには8件の展示を対象とした、端末内で動作する全文検索と分類フィルタがあります。検索語やフィルタ状態は外部へ送信しません。展示を追加するときは `index.html` のカードに `data-category` を付けてください（`social`, `words`, `science`）。
+
+EXHIBIT 010: [確率に裏切られる3枚の扉](exhibits/monty.html)。
