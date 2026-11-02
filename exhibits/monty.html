@@ -1,0 +1,22 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1b172a">
+<meta name="description" content="3枚の扉からひとつ選び、乗り換えた方が有利になる確率の逆説を体験する無益な実験室。">
+<title>確率に裏切られる3枚の扉 | ODD LAB</title>
+<link rel="stylesheet" href="./monty.css"><script src="./monty-core.js" defer></script><script src="./monty-ui.js" defer></script>
+</head><body>
+<a href="#experiment" class="skip">扉の実験へ</a>
+<header class="header"><a class="brand" href="../index.html#exhibits">✳ ODD LAB</a><a href="../index.html#exhibits">← 展示室へ</a></header>
+<main>
+<section class="intro"><span class="eyebrow">EXHIBIT 010 / THE PARADOX OF CHOICE</span><h1>確率に<br><em>裏切られる。</em></h1><p>3つの扉のうち、景品があるのは1つだけ。司会者がハズレを開いたあと、あなたは選択を変えますか？</p><a class="jump" href="#experiment">実験を始める ↓</a></section>
+<section class="lab" id="experiment" aria-labelledby="lab-title"><div class="lab-head"><div class="overline">01 / DECISION CHAMBER</div><h2 id="lab-title">3枚の扉</h2></div><span class="phase" id="phase" role="status" aria-live="polite">まず1つの扉を選択してください。</span></div>
+<div class="door-grid" role="group" aria-label="3枚の扉から選択"><button type="button" class="door" data-door="0" aria-pressed="false"><span class="door-number">01</span><span class="door-symbol" aria-hidden="true">?</span><span class="door-label">DOOR A</span></button><button type="button" class="door" data-door="1" aria-pressed="false"><span class="door-number">02</span><span class="door-symbol" aria-hidden="true">?</span><span class="door-label">DOOR B</span></button><button type="button" class="door" data-door="2" aria-pressed="false"><span class="door-number">03</span><span class="door-symbol" aria-hidden="true">?</span><span class="door-label">DOOR C</span></button></div>
+<div class="decision-panel" id="decision-panel" hidden><div><span class="overline">YOUR DECISION</span><h3>まだ選び直せます。</h3><p>司会者はハズレの扉を1枚開きました。あなたは最初の扉を選び続けますか？</p></div><div class="decision-actions"><button id="stay" type="button">このままにする</button><button id="switch" type="button" class="primary">残りの扉に変える ↗</button></div></div>
+<div class="outcome" id="outcome" aria-live="polite">司会者は必ず、景品のない扉を1枚だけ開けます。</div>
+<button id="next-round" class="restart" type="button" hidden>次の実験を行う ↺</button>
+</section>
+<section class="results"><div class="results-heading"><span class="overline">02 / LAB NOTEBOOK</span><h2>あなたの実験記録</h2><p>このページを開いている間だけ集計します。サーバーへの送信や端末への保存はありません。</p></div>
+<div class="stats"><div class="stat"><span>選択を変えない</span><strong id="stay-rate">—</strong><small id="stay-count">0勝 / 0回</small><div class="bar-track"><div id="stay-bar"></div></div><small>理論上の勝率 約33.3%</small></div><div class="stat"><span>選択を変える</span><strong id="switch-rate">—</strong><small id="switch-count">0勝 / 0回</small><div class="bar-track"><div id="switch-bar"></div></div><small>理論上の勝率 約66.7%</small></div></div>
+<div class="analysis"><button type="button" id="simulate">1000回の実験をシミュレート ↗</button><button type="button" id="reset-stats">記録を消去 ×</button><div id="simulate-result" role="status" aria-live="polite">大量試行は別枠で計算し、あなたの対戦記録には加算しません。</div></div>
+</section>
+<section class="theory"><span class="overline">03 / IMPORTANT ASSUMPTIONS</span><h2>なぜ選び直すと<br>有利なの？</h2><p>最初の選択が正解である確率は1/3、ハズレである確率は2/3です。司会者は景品の場所を知っていて、必ず未選択のハズレの扉を開きます。そのため、選択を変えると「最初にハズレを選んでいた場合」に勝てます。</p><p>この司会者の行動規則は大切です。司会者が適当に扉を開くなど、違うルールなら結論も変わる場合があります。サンプルの勝率は乱数による変動を含み、必ず理論値と一致するわけではありません。</p><a href="https://github.com/lovingthenhk-cpu/gpt-relay-oddities/issues/11" target="_blank" rel="noopener noreferrer">設計会議を読む ↗</a></section>
+</main><footer><span>ODD LAB ✳</span><span>A REAL PROBABILITY PROBLEM IN A USELESS MUSEUM.</span><a href="../index.html">展示室に戻る ↗</a></footer></body></html>
