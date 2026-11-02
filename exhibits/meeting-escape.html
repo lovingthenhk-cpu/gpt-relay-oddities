@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121724">
+  <meta name="description" content="議題を決めても、会議からは逃げられない？選択で結末が変わるODD LABの短い架空の会議ゲーム。">
+  <title>会議室からの脱出 | ODD LAB</title>
+  <link rel="stylesheet" href="./meeting-escape.css">
+  <script src="./meeting-escape.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#play">ゲームへ移動</a>
+  <header class="topbar">
+    <a href="../index.html#exhibits" class="brand">✳ <span>ODD LAB</span></a>
+    <a href="../index.html#exhibits" class="back">← 展示室に戻る</a>
+  </header>
+  <main>
+    <div class="intro">
+      <span class="eyebrow">EXHIBIT 005 · DECISION PARADOX</span>
+      <h1>会議室からの<br><em>脱出</em></h1>
+      <p>会議の目的は、何かを決めること。では、誰も決めたがらなかったら？<br>あなたの選択で「決定度」と「未解決事項」が変わります。</p>
+      <div class="notice">これは架空の風刺ゲームです。入力した議題は外部に送信されず、保存もされません。</div>
+    </div>
+    <section class="game" id="play" aria-labelledby="game-title">
+      <div class="game-top"><span>MEETING ROOM 005</span><span id="phase" aria-live="polite">議題受付中</span></div>
+      <div class="game-inner">
+        <div class="agenda-card">
+          <h2 id="game-title">本日の議題</h2>
+          <label for="agenda">何を決める会議ですか？</label>
+          <div class="agenda-input">
+            <input id="agenda" type="text" maxlength="60" autocomplete="off" placeholder="例：会議を減らす方法">
+            <button type="button" id="start">審議開始 ↗</button>
+          </div>
+          <p class="hint">空欄なら「会議を減らす方法」で始まります。開始後は途中で議題を変更できません。</p>
+        </div>
+        <div class="status" role="group" aria-label="会議の状態">
+          <div class="meter">
+            <div class="meter-heading"><span>決定度</span><strong id="clarity-text">0 / 6</strong></div>
+            <div class="meter-track" role="progressbar" aria-label="決定度" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="clarity-meter"><span id="clarity-bar"></span></div>
+          </div>
+          <div class="stat"><span>未解決事項</span><strong id="debt">3 <small>件</small></strong></div>
+          <div class="stat"><span>会議に費やした時間</span><strong id="minutes">0 <small>分</small></strong></div>
+          <div class="stat"><span>開催回数</span><strong id="turn">0 <small>回</small></strong></div>
+        </div>
+        <div class="decisions">
+          <h2>次に取る行動</h2>
+          <p>3種類の行動が、同じ条件なら必ず同じ結果をもたらします。運ではなく判断のゲームです。</p>
+          <div class="choices">
+            <button type="button" data-move="focus" disabled><b>01　論点をひとつに絞る</b><span>決定度 +2 / 未解決事項 −1 / 15分</span></button>
+            <button type="button" data-move="research" disabled><b>02　追加資料を取り寄せる</b><span>決定度 +1 / 未解決事項 +1 / 35分</span></button>
+            <button type="button" data-move="reschedule" disabled><b>03　次の会議を予約する</b><span>決定度 −1 / 未解決事項 +1 / 60分</span></button>
+          </div>
+          <p class="rules">脱出条件：決定度6以上かつ未解決事項1件以下。会議8回、または再予約3回で強制終了。</p>
+        </div>
+        <div class="outcome" id="outcome" role="status" aria-live="polite">議題を入力して「審議開始」を押してください。</div>
+        <section class="minutes" aria-labelledby="minutes-title">
+          <div class="minutes-header"><h2 id="minutes-title">議事録</h2><button type="button" id="reset">最初からやり直す ↺</button></div>
+          <ol id="log" aria-live="polite"><li>まだ一度も会議が開かれていません。</li></ol>
+        </section>
+      </div>
+    </section>
+    <aside class="colophon">
+      <span>HOW IT WORKS</span>
+      <p>外部API・追跡コード・乱数は使いません。状態遷移はJavaScript内で定義されていて、同じ選択をすれば同じ結果です。「決定度」も「未解決事項」もゲーム上の架空の指標ですよ。</p>
+      <a href="https://github.com/lovingthenhk-cpu/gpt-relay-oddities" rel="noopener noreferrer" target="_blank">ソースコードを見る ↗</a>
+    </aside>
+  </main>
+  <footer><span>ODD LAB ✳</span><a href="../index.html">博物館に戻る ↗</a></footer>
+</body>
+</html>
