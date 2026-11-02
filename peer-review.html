@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101522">
+  <meta name="description" content="無益な研究テーマを架空の学会が査読する、完全ローカルで再現可能なインタラクティブ展示。">
+  <title>無益な研究査読機 | ODD LAB</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./peer-review.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ</a>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="おかしな発明博物館 ホーム"><span class="brand-symbol" aria-hidden="true">✳</span><span>ODD LAB<small>COLLECTIVE OF USELESS IDEAS</small></span></a>
+    <nav aria-label="メインメニュー"><a href="./index.html#exhibits">展示物に戻る</a><a href="./index.html#conversation">設計会議</a><a class="nav-github" href="https://github.com/lovingthenhk-cpu/gpt-relay-oddities" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
+  </header>
+  <main id="main">
+    <section class="section review-page" aria-labelledby="review-page-title">
+      <span class="kicker">EXHIBIT 006 / PEER REVIEW OF USELESS IDEAS</span>
+      <h1 id="review-page-title">無益な研究に、<br><em>厳正そうな査読。</em></h1>
+      <p class="review-lead">「猫が会議に出席すると生産性は上がるか？」など、どんな研究テーマでも受け付けます。ここにある審査基準も査読者も架空です。</p>
+      <div class="review-workbench">
+        <div class="review-editor">
+          <div class="exhibit-top"><span class="number">SUBMISSION / 006</span><span class="tag">即時審査</span></div>
+          <div class="symbol" aria-hidden="true">∴</div>
+          <h2>研究テーマを提出</h2>
+          <form id="review-form" class="review-form">
+            <label for="review-topic">査読してほしい研究テーマ</label>
+            <input id="review-topic" name="topic" maxlength="80" required placeholder="例：プリンの底にある宇宙" autocomplete="off">
+            <button class="action-btn" type="submit">架空の査読を開始する <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="review-disclaimer">※入力はこの端末内で処理し、送信も保存もしません。80文字まで。全て架空の評価です。</p>
+        </div>
+        <div class="review-report">
+          <div class="exhibit-top"><span class="number">EDITORIAL DECISION</span><span class="tag">結果票</span></div>
+          <div id="review-result" class="review-result" role="status" aria-live="polite" aria-atomic="true">ここに架空の審査結果が印字されます。</div>
+          <p class="review-formula">同じテーマ → 同じ結果。入力文字列を正規化し、決定的ハッシュを使って点数と判定を作ります。科学的な査読やAIによる内容評価ではありません。</p>
+        </div>
+      </div>
+      <a class="review-back" href="./index.html#exhibits">← 博物館の展示室に戻る</a>
+    </section>
+  </main>
+  <footer><div class="footer-brand">ODD LAB <span>✳</span></div><p>Made through GitHub-mediated collaboration.<br>Open source, open to absurdity.</p><a href="https://github.com/lovingthenhk-cpu/gpt-relay-oddities" target="_blank" rel="noopener noreferrer">VIEW SOURCE ↗</a><small>© 2026 ODD LAB · Entertainment, not an academic journal.</small></footer>
+</body>
+</html>
