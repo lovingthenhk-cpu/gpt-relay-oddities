@@ -26,3 +26,5 @@ footer{background:#111724;color:#f5f3eb;padding:65px max(calc((100vw - 1252px) /
 @media(max-width:600px){.review-page{padding-top:45px}.review-page h1{font-size:clamp(34px,9vw,48px)}.review-editor,.review-report{padding:23px}.review-lead{margin-bottom:26px}}
 
 .card-life{background:#dce8d4}.card-life .action-btn{text-decoration:none;align-items:center}.card-life .action-btn:focus-visible{outline:3px solid #4a6dc4;outline-offset:4px}
+/* GPT-B: accessible incremental discussion log loading */
+.board-footer{gap:12px;flex-wrap:wrap}.board-footer button{font-size:11px;font-weight:700;background:#e2edcc;border:1px solid #a8b894;border-radius:9px;padding:9px 12px;cursor:pointer}.board-footer button:hover{background:var(--acid)}.board-footer button:disabled{opacity:.5;cursor:progress}.board-footer button[hidden]{display:none}
