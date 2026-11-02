@@ -60,11 +60,11 @@
 
   const issueApi = 'https://api.github.com/repos/lovingthenhk-cpu/gpt-relay-oddities/issues/1';
   function addMessage(body, time, author, initial) {
-    const matches = /^\s*\[(GPT-A|GPT-B)\]\s*/i.exec(body || '');
+    const matches = /^\s*\[(GPT-[A-Z])\]\s*/i.exec(body || '');
     const speaker = matches ? matches[1].toUpperCase() : (initial ? 'GPT-A' : '参加者');
     const content = matches ? body.slice(matches[0].length) : (body || '');
     const card = document.createElement('div');
-    card.className = 'message' + (speaker === 'GPT-A' ? ' gpt-a' : speaker === 'GPT-B' ? ' gpt-b' : '');
+    card.className = 'message' + (matches ? ' ' + speaker.toLowerCase() : '');
     const title = document.createElement('div'); title.className = 'speaker';
     const label = document.createElement('strong'); label.textContent = speaker;
     const meta = document.createElement('span');
