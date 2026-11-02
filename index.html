@@ -8,7 +8,6 @@
   <title>おかしな発明博物館 | ODD LAB</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./app.js" defer></script>
-  <script src="./peer-review.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">本文へ</a>
@@ -46,7 +45,7 @@
         <article class="exhibit card-word"><div class="exhibit-top"><span class="number">EXHIBIT 002</span><span class="tag">言語学の事故</span></div><div class="symbol" aria-hidden="true">あ↝</div><h3>未来語製造装置</h3><p>まだ誰も使っていない言葉に、無理やり意味を与えます。</p><div class="machine-output" id="word-output" aria-live="polite">新語はまだ辞書にありません。</div><button class="action-btn" id="word-button" type="button">新語を発明する <span>→</span></button></article>
         <article class="exhibit card-clock"><div class="exhibit-top"><span class="number">EXHIBIT 003</span><span class="tag">精度の無駄遣い</span></div><div class="symbol" aria-hidden="true">◷</div><h3>無駄に壮大な時計</h3><p>現在時刻を、人間生活では意味のない単位でお知らせします。</p><div class="machine-output"><span class="metric-value" id="clock-output">計測中…</span><small id="clock-note">1970年1月1日からの経過秒数</small></div><button class="action-btn" id="clock-button" type="button">単位を変える <span>→</span></button></article>
         <article class="exhibit card-vote"><div class="exhibit-top"><span class="number">EXHIBIT 004</span><span class="tag">民主主義の遊び</span></div><div class="symbol" aria-hidden="true">✳</div><h3>どうでもいい国民投票</h3><p>「靴下はなぜ片方だけ消えるのか」。あなたの仮説に一票を。</p><div class="poll" role="group" aria-label="靴下が消える理由"><button type="button" data-vote="異次元への移住">異次元への移住</button><button type="button" data-vote="洗濯機の税金">洗濯機の税金</button><button type="button" data-vote="靴下の自由意志">靴下の自由意志</button></div><div class="poll-result" id="poll-result" aria-live="polite">※投票結果はこの端末内にのみ保存されます。</div></article>
-        <article class="exhibit card-review" id="peer-review"><div class="exhibit-top"><span class="number">EXHIBIT 005</span><span class="tag">架空の学術審査</span></div><div class="symbol" aria-hidden="true">∴</div><h3>無益な研究査読機</h3><p>どんな研究テーマでも審査。根拠はありませんが、判定は何度でも再現できます。</p><form id="review-form" class="review-form"><label for="review-topic">査読してほしい研究テーマ</label><input id="review-topic" name="topic" maxlength="80" required placeholder="例：プリンの底にある宇宙" autocomplete="off"><button class="action-btn" type="submit">この研究を査読する <span aria-hidden="true">→</span></button></form><div id="review-result" class="review-result" role="status" aria-live="polite" aria-atomic="true">テーマを入力して、査読を依頼してください。</div><p class="review-disclaimer">※全て架空の評価です。入力は送信・保存されません。</p></article>
+        <article class="exhibit card-review" id="peer-review"><div class="exhibit-top"><span class="number">EXHIBIT 006</span><span class="tag">架空の学術審査</span></div><div class="symbol" aria-hidden="true">∴</div><h3>無益な研究査読機</h3><p>研究テーマを持ち込むと、架空の学会が査読します。判定は無意味ですが、同じテーマなら再現可能です。</p><div class="machine-output">新規性・再現性・実用性を0〜100点で評価。ただし、実在する審査とは無関係です。</div><a class="action-btn" href="./peer-review.html">研究テーマを査読する <span aria-hidden="true">→</span></a></article>
       </div>
     </section>
 
